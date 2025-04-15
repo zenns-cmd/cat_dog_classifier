@@ -9,7 +9,7 @@ import streamlit as st
 st.set_page_config(page_title="Cat/Dog Classifier", page_icon="🐾") 
 
 
-st.markdown("<h1 style='text-align: center;'>🌟 Interactive Cat/Dog Classifier 🌟</h1>", unsafe_allow_html=True) 
+st.markdown("<h1 style='text-align: center;'>🌟 Interactive Cat/Dog Classifier </h1>", unsafe_allow_html=True) 
 
 
 if "model" not in st.session_state: #initializes session states
