@@ -55,7 +55,7 @@ def load_images():
             img = img[::h//(target_size[0]), ::w//(target_size[1])]
             img = img[:target_size[0], :target_size[1]] #safety crop
             
-            images.append(img.flatten()) #2d to 1d
+            images.append(img.flatten()) #2d to 1d (need to flatten for SVM input)
             
        
             if "cat" in filename.lower():
