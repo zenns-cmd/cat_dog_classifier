@@ -24,20 +24,20 @@ The folder pet_photos is used as training data.
 
 1. (Training Phase):
    
-Loads labeled images from pet_photos folder
+-Loads labeled images from pet_photos folder
 
-Converts all images to 64x64 grayscale (all images need to be the same size in order to train the model)
+-Converts all images to 64x64 grayscale (all images need to be the same size in order to train the model)
 
-Trains SVM classifier on pixel values for each image
+-Trains SVM classifier on pixel values for each image
 
 
 2. (Prediction Phase):
    
-Processes uploaded image the same way as processing training images
+-Processes uploaded image the same way as processing training images
 
-Uses trained model to predict cat/dog class
+-Uses trained model to predict cat/dog class
 
-Returns prediction with confidence score
+-Returns prediction with confidence score
 
 💡 Notes:
 
