@@ -183,3 +183,5 @@ if st.session_state.training_complete:  # if it equals True
 
 else:
     st.info("Please train the model first using the sidebar option.")
+
+
