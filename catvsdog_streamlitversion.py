@@ -12,7 +12,7 @@ st.set_page_config(page_title="Cat/Dog Classifier", page_icon="🐾")
 st.markdown("<h1 style='text-align: center;'>🌟 Interactive Cat/Dog Classifier </h1>", unsafe_allow_html=True) 
 
 
-if "model" not in st.session_state: #initializes session states
+if "model" not in st.session_state: #initializes session states to remember values between interactions on the app later on
     st.session_state.model = None
     st.session_state.training_complete = False
     st.session_state.x = None
