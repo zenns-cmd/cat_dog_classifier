@@ -1,7 +1,7 @@
 import os
 import numpy as np
-from sklearn.svm import SVC
-from matplotlib.image import imread
+from sklearn.svm import SVC  #machine learning
+from matplotlib.image import imread #image processing
 from pathlib import Path
 import streamlit as st
 
@@ -31,25 +31,41 @@ def load_images():
     
     files = []
 
-    for f in os.listdir(training_data):
-     if f.lower().endswith((".png", ".jpg", ".jpeg")):
+    #lists the files
+    for filename in os.listdir(training_data):
+     if filename.lower().endswith((".png", ".jpg", ".jpeg")):
         files.append(f)
 
     total_files = len(files)
+
+    #(2, 2, 3) → (height, width, channels) color
+    #(2, 2) → (image height, image width) grayscale (2 rows tall 2 columns wide)
     
     for i, filename in enumerate(files):
+        
         try:
             img_path = training_data / filename
             img = imread(img_path)
+
+    #axis=0: operates vertically (along rows)
+    #axis=1: operates horizontally (along columns)
+    #axis=2: operates across color channels (for colored images)
 
             if len(img.shape) == 3:  
                 img = img.mean(axis=2)  
         
             h, w = img.shape
-            img = img[::h//(target_size[0]), ::w//(target_size[1])]
-            img = img[:target_size[0], :target_size[1]]
             
-            images.append(img.flatten())
+    #resizing to match target size
+    #devision calculates how many pixels to skip to reach target size
+    #height: vertical skip (row by row)
+    # width: horizontal skip (column by column)
+
+            #start/stop/step 
+            img = img[::h//(target_size[0]), ::w//(target_size[1])]
+            img = img[:target_size[0], :target_size[1]] #safety crop
+            
+            images.append(img.flatten()) #2d to 1d (need to flatten for SVM input)
             
             if "cat" in filename.lower():
                 animal = "🐱"
@@ -67,8 +83,10 @@ def load_images():
 
     progress_bar.empty()
     status_text.empty()
-    
+
+    #each image's flattened pixels become one row in a 2D array
     return np.array(images), np.array(labels)
+    
 
 def train_model():
     st.write("🧠 Training the AI classifier...")
@@ -82,14 +100,17 @@ def train_model():
         2. Images are JPG/PNG format
         3. Filenames contain cat or dog
         """)
-    
 
     st.success(f"✅ Successfully loaded {len(x)} images")
     st.write("⌛ Training the model...")
 
+    
+    #decision boundary is linear
     model = SVC(kernel="linear", probability=True)
     model.fit(x, y)
+
     
+    #remembers values for each variable
     st.session_state.model = model
     st.session_state.training_complete = True
     st.session_state.x = x
@@ -99,10 +120,12 @@ def train_model():
     
 
 def predict_pet(image_path):
+    
     try:
         st.write("🔮 Analyzing image...")
         img = imread(image_path)
-        
+
+     #process exactly like training images
         if len(img.shape) == 3:
             img = img.mean(axis=2)
             
@@ -111,8 +134,13 @@ def predict_pet(image_path):
         img = img[::h//target_size[0], ::w//target_size[1]]
         img = img[:target_size[0], :target_size[1]]
         
+
+    #model.predict_proba and model.predict expect multiple samples even if you only have one
+    # ^^ which makes adding the [] around img.flatten necessary in order to create a batch
+    # [0] removes the extra batch at the end
+        
         probabilities = st.session_state.model.predict_proba([img.flatten()])[0]
-        cat_prob = probabilities[0]
+        cat_prob = probabilities[0]  #probabilities= [catprob,dogprob]
         dog_prob = probabilities[1]
 
         prediction = st.session_state.model.predict([img.flatten()])[0]
