@@ -2,7 +2,8 @@ This project implements a machine learning classifier that distinguishes between
 
 ✨ Interactive Version (using streamlit):
 
-I've deployed an interactive version of the code at -
+I've deployed an interactive version of the code at https://catdogclassifier101.streamlit.app/
+
 (has drag and drop instead of path input for image)
 
 I uploaded both the original and streamlit version of the code on this repository. The files requirements.txt and psh.py are just extras used for deployment.
