@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.svm import SVC #machine learning
 from matplotlib.image import imread #image processing
 from pathlib import Path
-from PIL import Image
+
 
 
 print(r"""      
@@ -159,3 +159,5 @@ while True:
     if input("> ").lower() != 'yes':
         print("\n✨ Thanks for using the Cat/Dog Classifier! Goodbye! ✨")
         break
+
+
