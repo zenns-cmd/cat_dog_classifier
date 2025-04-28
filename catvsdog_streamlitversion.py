@@ -34,7 +34,7 @@ def load_images():
     #lists the files
     for filename in os.listdir(training_data):
      if filename.lower().endswith((".png", ".jpg", ".jpeg")):
-        files.append(f)
+        files.append(filename)
 
     total_files = len(files)
 
